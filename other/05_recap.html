@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Recap - Coders School</title>
+
+        <meta name="description" content="C++11, C++14 and C++17 presentation">
+        <meta name="author" content="Lukasz Ziobron">
+
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/coders.css" id="theme">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="lib/css/monokai.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h1>Recap</h1>
+                    <p>
+                        <small>Created by <a href="https://www.linkedin.com/in/lukaszziobron/">Łukasz Ziobroń</a></small>
+                    </p>
+                    <a href="https://coders.school">
+                        <img width="500" data-src="img/coders_school_logo.png" alt="Coders School" class="plain">
+                    </a>
+                </section>
+
+                <section>
+                    <h2>What do you remember from today's session?</h2>
+                    <p>Recalling and repetition is the key to effective learning and remembering.</p>
+                </section>
+
+                <section>
+                    <h2>Pre-test answers</h2>
+                    <table style="position: absolute; left: 25%">
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>A B C</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>C</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>A B C D</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>C</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table style="position: absolute; right: 25%">
+                        <tbody>
+                            <tr>
+                                <td>6</td>
+                                <td>A-H</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>A B C E</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>A D</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>A C D</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>A</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h2>Post-work</h2>
+                    <ul>
+                        <li><a href="https://forms.gle/zY5em9Esm6kT4kwHA">Online post-test</a> - do it about a week after the training and check out how much do you remember</li>
+                        <li><a href="https://github.com/coders-school/modern_cpp/blob/master/README.md">Other modern C++ stuff</a> - Check out README.md for more tasks</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Feedback</h2>
+                    <ol>
+                        <li>What could be improved in this training?</li>
+                        <li>What was the most valuable for you?</li>
+                    </ol>
+                </section>
+
+                <section data-background="img/coders_school_logo.png" data-background-size="90%">
+                    <h2>Thank you :)</h2>
+                </section>
+            </div>
+        </div>
+
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                width: 1200,
+                height: 750,
+                slideNumber: true,
+                hash: true,
+                dependencies: [
+                    { src: 'plugin/externalcode/externalcode.js', condition: function() { return !!document.querySelector( '[data-code]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/markdown/marked.js' },
+                    { src: 'plugin/markdown/markdown.js' },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,351 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>C++ idioms - Coders School</title>
+
+        <meta name="description" content="C++11, C++14 and C++17 presentation">
+        <meta name="author" content="Lukasz Ziobron">
+
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/coders.css" id="theme">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="lib/css/monokai.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h1>C++ idioms</h1>
+                    <h3>SFINAE, PIMPL</h3>
+                    <p>
+                        <small>Created by <a href="https://www.linkedin.com/in/lukaszziobron/">Łukasz Ziobroń</a></small>
+                    </p>
+                    <a href="https://coders.school">
+                        <img width="500" data-src="img/coders_school_logo.png" alt="Coders School" class="plain">
+                    </a>
+                </section>
+
+                <section>
+                    <section data-transition="fade">
+                        <h2>Overload resolution</h2>
+                        <pre><code class="cpp" data-trim data-line-numbers>
+void foo(unsigned i) {
+    std::cout &lt;&lt; "unsigned " &lt;&lt; i &lt;&lt; "\n";
+}
+    
+template &lt;typename T&gt;
+void foo(const T& t) {
+    std::cout &lt;&lt; "template " &lt;&lt; t &lt;&lt; "\n";
+}
+                        </code></pre>
+                        <p>What is the result of calling <code>foo(42)</code>?</p>
+                        <p class="fragment"><code>template 42</code></p>
+                        <p class="fragment">Why <code>const int &</code> is a better match than <code>unsigned</code>?</p>
+                        <p class="fragment">Const reference can bind to r-values. No conversion is needed, there is an exact match, so this option is chosen.</p>
+                    </section>
+                    <section data-transition="fade" data-transition-speed="slow">
+                        <h2>Overload resolution</h2>
+                        <pre><code class="cpp" data-trim data-line-numbers>
+void foo(unsigned i) {
+    std::cout &lt;&lt; "unsigned " &lt;&lt; i &lt;&lt; "\n";
+}
+
+template &lt;typename T&gt;
+void foo(T& t) {
+    std::cout &lt;&lt; "template " &lt;&lt; t &lt;&lt; "\n";
+}
+                        </code></pre>
+                        <p>What is the result of calling <code>foo(42)</code> now?</p>
+                        <p class="fragment"><code>unsigned 42</code></p>
+                        <p class="fragment">Why <code>unsigned</code> is a better match than <code>int &</code>?</p>
+                        <p class="fragment">Reference (non-const) cannot bind to r-values. There is only one function matching. Implicit conversion from int to unsigned is applied.</p>
+                    </section>
+                    <section data-transition="fade">
+                        <h2>Overload resolution</h2>
+                        <pre><code class="cpp" data-trim data-line-numbers>
+void foo(unsigned i) {
+    std::cout &lt;&lt; "unsigned " &lt;&lt; i &lt;&lt; "\n";
+}
+
+void foo(double i) {
+    std::cout &lt;&lt; "double " &lt;&lt; i &lt;&lt; "\n";
+}
+                        </code></pre>
+                        <p>What is the result of calling <code>foo(42)</code>?</p>
+                        <p class="fragment"><code>error: call of overloaded ‘foo(int)’ is ambiguous</code></p>
+                        <p class="fragment">Why?</p>
+                        <p class="fragment">Promotion to double and conversion to unsigned are equally viable.</p>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Simple SFINAE example</h2>
+                    <pre><code class="cpp" data-trim data-line-numbers>
+template &lt;typename T&gt;
+void foo(T arg) {}
+
+template &lt;typename T&gt;
+void foo(T* arg) {}
+                    </code></pre>
+                    <p class="fragment">Calling <code>foo(42)</code> makes a compiler to generate two functions.</p>
+                    <pre class="fragment"><code class="cpp" data-trim data-line-numbers>
+void foo(int arg) {}
+void foo(int* arg) {}
+                    </code></pre>
+                    <p class="fragment">Compiler cannot substitute <code>42</code> as an argument to the second function. It would cause a compilation error. Therefore this overload is discarded.</p>
+                    <p class="fragment">There is no compilation error - this is SFINAE works.</p>
+                    <p class="fragment">If the first funtion will be missing, there would be a compilation error.</p>
+                </section>
+
+                <section>
+                    <h2>SFINAE</h2>
+                    <p class="fragment">Substitution Failure Is Not An Error is a meta-programming technique.</p>
+                    <blockquote class="fragment" cite="https://en.cppreference.com/w/cpp/language/sfinae">
+                        &ldquo;This rule applies during overload resolution of function templates: When substituting the explicitly specified or deduced type for the template parameter fails, the specialization is discarded from the overload set instead of causing a compile error.&rdquo;
+                        <small>-- <a href="https://en.cppreference.com/w/cpp/language/sfinae">cppreference.com</a></small>
+                    </blockquote>
+                    <p class="fragment"><strong>Rationale</strong>: have a universal interface without letting the caller to decide which implementation should be called. Selection of an optimal implementation is done by a compiler and is coded by a library creators.</p>
+                </section>
+
+                <section>
+                    <section>
+                        <h2><code>std::enable_if</code></h2>
+                        <p>C++11 has a metaprogramming helper struct - <code>std::enable_if</code>. It is a compile-time switch for enabling or disabling some templates.</p>
+                        <pre class="fragment"><code class="cpp" data-trim data-line-numbers>
+template &lt;bool Condition, class T = void&gt;
+struct enable_if {};
+    
+template &lt;class T&gt;
+struct enable_if&lt;true, T&gt; { using type = T; };
+                        </code></pre>
+                        <ul>
+                            <li class="fragment">If <code>Condition</code> is <code>true</code>, accessing internal type by <code>enable_if&lt;Condition, T&gt;::type</code> is valid.</li>
+                            <li class="fragment">If <code>Condition</code> is <code>false</code>, accessing internal type by <code>enable_if&lt;Condition, T&gt;::type</code> is invalid and substitution is not correct - SFINAE works.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2><code>std::enable_if_t</code></h2>
+                        <p>C++14 defines a helper type:</p>
+                        <pre><code data-trim data-line-numbers>
+template &lt;bool B, class T = void&gt;
+using enable_if_t = typename enable_if&lt;B, T&gt;::type;
+                        </code></pre>
+                        <p class="fragment">Using both is equivalent.</p>
+                        <pre class="fragment"><code data-trim data-line-numbers>
+template &lt;class T,
+          typename std::enable_if&lt;std::is_integral&lt;T&gt;::value,
+                                  T&gt;::type* = nullptr&gt;
+void function(T& t) {}
+ 
+
+template &lt;class T,
+          typename std::enable_if_t&lt;std::is_integral_v&lt;T&gt;,
+                                    T&gt;* = nullptr&gt;
+void function(T& t) {}
+                        </code></pre>
+                        <p class="fragment">Why <code>* = nullptr</code>?</p>
+                    </section>
+
+                    <section>
+                        <h2><code>enable_if</code> occurences</h2>
+                        <pre class="fragment"><code class="cpp" data-trim>
+template&lt;class T&gt;     // #1 return type
+auto construct(T* t) -&gt;
+    typename std::enable_if_t&lt;std::has_virtual_destructor_v&lt;T&gt;, T&gt;* 
+{ return new T{}; }
+                        </code></pre>
+                        <pre class="fragment"><code class="cpp" data-trim>
+template&lt;class T&gt;     // #2 parameter
+T* construct(
+    T* t, 
+    typename std::enable_if_t&lt;std::has_virtual_destructor_v&lt;T&gt;&gt;* = nullptr
+){ return new T{}; }
+                        </code></pre>
+                        <pre class="fragment"><code class="cpp" data-trim>
+template&lt;
+    class T,          // #3 template parameter - usual choice from C++11
+    typename std::enable_if_t&lt;std::has_virtual_destructor_v&lt;T&gt;&gt;* = nullptr
+&gt;
+T* construct(T* t)
+{ return new T{}; }
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2><code>enable_if</code> occurences</h2>
+                        <p>The most elegant way</p>
+                        <pre class="fragment"><code class="cpp" data-trim>
+template &lt;typename T&gt;     
+using HasVirtDtor = std::enable_if_t&lt;std::has_virtual_destructor_v&lt;T&gt;&gt;;
+
+template&lt;
+    class T,          // the same as #3 - template parameter
+    typename = HasVirtDtor&lt;T&gt;
+&gt;
+T* construct(T* t)
+{ return new T{}; }
+                        </code></pre>
+                    </section>
+                </section>
+                    
+                <section data-background-iframe="https://en.cppreference.com/w/cpp/header/type_traits" data-background-interactive>
+                    <div class="box" style="position: absolute; width: 35%; right: 0; background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
+                        <h2><code>type_traits</code> library</h2>
+                        <p><a href="https://en.cppreference.com/w/cpp/header/type_traits">&lt;type_traits&gt; on cppreference.com</a></p>
+                    </div>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Task</h2>
+                        <p>Write a function that allows inserting only subclasses of Shape to the collection. Other parameter types should not compile. Use SFINAE. Find proper type_traits.</p>
+                        <p class="fragment">Hints:</p>
+                        <ul>
+                            <li class="fragment">std::is_base_of</li>
+                            <li class="fragment">std::remove_reference</li>
+                            <li class="fragment">std::remove_cv</li>
+                        </ul>
+                    </section>
+                </section>
+
+
+                <section>
+                    <h2>PIMPL</h2>
+                    <h3>a.k.a. Compilation firewall</h3>
+                    <p><strong>Rationale</strong>: avoiding long recompilation times, minimizing dependencies.</p>
+                    <p>PIMPL stands for "pointer to implementation".</p>
+                    <p>It is a dependency breaking technique, that allows to avoid recompilation of translation units utilizing our class. If internal parts of class changes very often and recompilation takes a lot of time it is worth considering PIMPL.</p>
+                </section>
+
+                <section>
+                    <h2>Before</h2>
+                    <pre class="fragment"><code class="cpp" data-trim>
+class Foo {                 // foo.hpp header file
+    int internalData = 0;   // private part changes often
+    int doWork(int);        // fields, functions signatures change
+public:
+    Foo();
+    int interface(int);     // interface is stable, doesn't change often
+};
+                    </code></pre>
+                    <pre class="fragment"><code class="cpp" data-trim>
+#include "foo.hpp"
+
+int Foo::doWork(int value) {
+    internalData = value;
+    return internalData;
+}
+Foo::Foo() {}
+int Foo::interface(int value) { return doWork(value); }
+                    </code></pre>
+                    <p class="fragment">Problem?</p>
+                    <p class="fragment">When a header file changes, every file that includes it, will need to be recompiled.</p>
+                </section>
+
+                <section>
+                    <h2>After - PIMPL</h2>
+                    <pre class="fragment"><code class="cpp" data-trim>
+#include &lt;memory&gt;     // foo.hpp header file
+class Foo {
+    class Impl;
+    std::unique_ptr&lt;Impl&gt; pimpl;
+public:
+    Foo();
+    ~Foo();
+    int interface(int);
+};
+                    </code></pre>
+                    <pre class="fragment"><code class="cpp" data-trim>
+#include "foo.hpp"
+class Foo::Impl {    // foo.cpp - implementation file
+    int internalData = 0;
+public:
+    int doWork(int value) {
+        internalData = value;
+        return internalData;
+    }
+};
+Foo::Foo() : pimpl{std::make_unique&lt;Impl&gt;()} {}
+Foo::~Foo() = default;  // must be explicitly defined in cpp file
+int Foo::interface(int value) { return pimpl->doWork(value); }
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>PIMPL - implementation</h2>
+                    <ul>
+                        <li class="fragment">All private non-virtual functions are placed in the implementation class</li>
+                        <li class="fragment">All public, protected and virtual members remain in the interface class</li>
+                        <li class="fragment">If any private member needs to access a public or protected part, a reference or a pointer should be passed to the private function as a parameter.</li>
+                        <li class="fragment">Use <code>std::unique_ptr</code> as a pointer to implementation</li>
+                        <li class="fragment">Define a destructor in cpp file - it needs to see the complete definition of Impl class to destroy <code>std::unique_ptr</code></li>
+                        <li class="fragment">Move operations also needs to be implemented in cpp file (<code>= default</code> is usually good solution)</li>
+                        <li class="fragment">Copy operations needs to be implemented by hand in cpp file</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>PIMPL - disadvantages</h2>
+                    <ul>
+                        <li class="fragment">More code</li>
+                        <li class="fragment">Access overhead - one additional level of indirection</li>
+                        <li class="fragment">Space overhead - one pointer in a public interface, optionally additional parameters needs to be passed to functions</li>
+                        <li class="fragment">Memory management overhead - pimpl is placed on the heap, possible memory fragmentation</li>
+                        <li class="fragment">Const correctness - how to propagate const to private implementation? <a href="https://en.cppreference.com/w/cpp/experimental/propagate_const">std::experimental::propagate_const</a></li>
+                    </ul>
+                    <p class="fragment"><a href="https://www.bfilipek.com/2018/01/pimpl.html">Bartek Filipek article on PIMPL</a></p>
+                </section>
+
+                <section data-background="img/coders_school_logo.png" data-background-size="90%">
+                    <h2>C++ idioms</h2>
+                    <ul>
+                        <li class="fragment">SFINAE</li>
+                        <li class="fragment">Overload resolution rules</li>
+                        <li class="fragment">enable_if</li>
+                        <li class="fragment">enable_if_t</li>
+                        <li class="fragment">type_traits</li>
+                        <li class="fragment">constexpr if</li>
+                        <li class="fragment">PIMPL</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                width: 1200,
+                height: 750,
+                slideNumber: true,
+                hash: true,
+                pdfSeparateFragments: false,
+                dependencies: [
+                    { src: 'plugin/externalcode/externalcode.js', condition: function() { return !!document.querySelector( '[data-code]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/markdown/marked.js' },
+                    { src: 'plugin/markdown/markdown.js' },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,488 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Modern C++ - Coders School</title>
+
+        <meta name="description" content="C++11, C++14 and C++17 presentation">
+        <meta name="author" content="Lukasz Ziobron">
+
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/coders.css" id="theme">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="lib/css/monokai.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h1>Modern C++</h1>
+                    <h3>C++11, C++14, C++17 features</h3>
+                    <p>
+                        <small>Created by <a href="https://www.linkedin.com/in/lukaszziobron/">Łukasz Ziobroń</a> and <a href="https://www.linkedin.com/in/kamilszatkowski/">Kamil Szatkowski</a></small>
+                    </p>
+                    <a href="https://coders.school">
+                        <img width="500" data-src="img/coders_school_logo.png" alt="Coders School" class="plain">
+                    </a>
+                </section>
+
+                <section data-transition="fade">
+                    <section data-transition="fade">
+                        <h2><code>default</code> keyword</h2>
+                        <pre><code class="cpp" data-trim data-line-numbers>
+class AwesomeClass {
+public:
+    AwesomeClass(const AwesomeClass&);
+    AwesomeClass& operator=(const AwesomeClass&);
+    // user defined copy operations prevents implicit generation 
+    // of default c-tor and move operations
+
+    AwesomeClass() = default;
+    AwesomeClass(AwesomeClass&&) = default;
+    AwesomeClass& operator=(AwesomeClass&&) = default;
+};
+                        </code></pre>
+                    </section>
+                    <section data-transition="fade">
+                        <h2><code>default</code> keyword</h2>
+                        <pre><code class="cpp" data-trim data-line-numbers="8-10">
+class AwesomeClass {
+public:
+    AwesomeClass(const AwesomeClass&);
+    AwesomeClass& operator=(const AwesomeClass&);
+    // user defined copy operations prevents implicit generation 
+    // of default c-tor and move operations
+
+    AwesomeClass() = default;
+    AwesomeClass(AwesomeClass&&) = default;
+    AwesomeClass& operator=(AwesomeClass&&) = default;
+};
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2><code>default</code> keyword</h2>
+                        <ul>
+                            <li class="fragment"><code>default</code> declaration enforces a compiler to generate default implicit implementation for marked functions</li>
+                            <li class="fragment">6 special functions can be marked as <code>default</code>: default c-tor, copy c-tor, copy assignment operator, move c-tor, move assignment operator, destructor</li>
+                            <li class="fragment">Operations declared as <code>default</code> are treated as user-declared (not implicitly-declared)</li>
+                            <li class="fragment">The default implementation of default c-tor is calling default c-tor for every member</li>
+                            <li class="fragment">The default implementation of d-tor is calling d-tor for every member</li>
+                            <li class="fragment">The default implementation of copy operations is calling copy operation for every member</li>
+                            <li class="fragment">The default implementation of move operations is calling move operation for every member</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section data-transition="fade">
+                        <h2><code>delete</code> keyword</h2>
+                        <pre><code class="cpp" data-trim data-line-numbers>
+class NoCopyable {  // NoCopyable idiom
+public:
+    NoCopyable() = default;
+    NoCopyable(const NoCopyable&) = delete;
+    NoCopyable& operator=(const NoCopyable&) = delete;
+};
+
+class NoMoveable {  // NoMoveable idiom
+    NoMoveable(NoMoveable&&) = delete;
+    NoMoveable& operator=(NoMoveable&&) = delete;
+};
+                        </code></pre>
+                    </section>
+                    <section data-transition="fade">
+                        <h2><code>delete</code> keyword</h2>
+                        <pre><code class="cpp" data-trim data-line-numbers="4,5,9,10">
+class NoCopyable {  // NoCopyable idiom
+public:
+    NoCopyable() = default;
+    NoCopyable(const NoCopyable&) = delete;
+    NoCopyable& operator=(const NoCopyable&) = delete;
+};
+
+class NoMoveable {  // NoMoveable idiom
+    NoMoveable(NoMoveable&&) = delete;
+    NoMoveable& operator=(NoMoveable&&) = delete;
+};
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2><code>delete</code> keyword</h2>
+                        <ul>
+                            <li class="fragment"><code>delete</code> declaration removes marked function</li>
+                            <li class="fragment">Calling a deleted function or taking an address causes a compilation error</li>
+                            <li class="fragment">No code is generated for deleted function</li>
+                            <li class="fragment">Deleted function are treated as user-declared</li>
+                            <li class="fragment"><code>delete</code> declaration can be used on any function, not only special class member functions</li>
+                            <li class="fragment"><code>delete</code> can be used to avoid unwanted implicit conversion of function arguments</li>
+                        </ul>
+                    </section>
+                    <section data-transition="fade">
+                        <h2><code>delete</code> keyword</h2>
+                        <pre><code class="cpp" data-trim data-line-numbers>
+void integral_only(int a) {
+    // ...
+}
+void integral_only(double d) = delete;
+
+integral_only(10);  // OK
+short s = 3;
+integral_only(s);   // OK - implicit conversion to int
+integral_only(3.0); // error - use of deleted function
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2><code>final</code> keyword</h2>
+                        <pre><code class="cpp" data-trim data-line-numbers>
+struct A final {};
+
+struct B : A {};    // compilation error
+                    // cannot derive from class marked as final
+                        </code></pre>
+                        <p><code>final</code> keyword used after a class/struct declaration blocks inheritance from this class.</p>
+                    </section>
+                    <section>
+                        <h2><code>final</code> keyword</h2>
+                        <pre><code class="cpp" data-trim data-line-numbers>
+struct A {
+    virtual void foo() const final {}
+    void bar() const final {}   // compilation error, only virtual 
+                                // functions can be marked as final
+};
+
+struct B : A {
+    void foo() const {}         // compilation error, cannot override 
+                                // function marked as final
+};
+                        </code></pre>
+                        <p><code>final</code> used after a virtual function declaration blocks overriding the implementation in derived classes.</p>
+                    </section>
+                </section>
+
+                <section>
+                    <h2><code>override</code> keyword</h2>
+                    <pre style="position: absolute; width: 37%"><code class="cpp" data-trim data-line-numbers>
+struct Base {
+    virtual void a();
+    virtual void b() const;
+    virtual void c();
+    void d();
+};
+                    </code></pre>
+                    <pre class="fragment" style="position: absolute; width: 60%; right: 0"><code class="cpp" data-trim data-line-numbers data-noescape>
+struct WithoutOverride : Base {
+    void a(); <span class="fragment">// overrides Base::a()</span>
+    void b(); <span class="fragment">// doesn't override B::b() const</span>
+    virtual void c(); <span class="fragment">// overrides B::c()</span>
+    void d(); <span class="fragment">// doesn't override B::d()</span>
+};
+                    </code></pre>
+                    <pre class="fragment" style="position: absolute; width: 100%; top: 320px"><code class="cpp" data-trim data-line-numbers>
+struct WithOverride : Base {
+    void a() override; // OK - overrides Base::a()
+    void b() override; // error - doesn't override B::b() const
+    virtual void c() override; // OK - overrides B::c(char)
+    void d() override; // error - B::d() is not virtual
+};
+                    </code></pre>
+                    <p class="fragment" style="position: absolute; width: 100%; top: 520px"><code>override</code> declaration enforces a compiler to check, if given virtual function is declared in the same way in a base class.</p>
+                </section>
+
+                <section>
+                    <section>
+                        <h2><code>constexpr</code> keyword</h2>
+                        <p><strong>Rationale</strong>: faster runtime binary by moving some computations at compile-time.</p>
+                        <p><code>constexpr</code> is an expression that can be evaluated at compile time and can appear in <a href="https://en.cppreference.com/w/cpp/language/constant_expression">constant expressions</a>. We can have:</p>
+                        <ul>
+                            <li>constexpr variable</li>
+                            <li>constexpr function</li>
+                            <li>constexpr constructor</li>
+                            <li>constexpr lambda (default from C++17)</li>
+                            <li>constexpr if (until C++17)</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2><code>constexpr</code> variables</h2>
+                        <pre><code class="cpp" data-trim>
+int a = 10;             // variable
+const int b = 20;       // constant
+const double c = 20;    // constant
+constexpr int d = 30;   // constant at compile-time
+
+constexpr auto e = a;   // error: initializer is not a contant expression
+constexpr auto f = b;   // OK for integral, C++03 compatibility exception
+constexpr auto g = c;   // error: initializer is not a contant expression
+constexpr auto h = d;   // OK
+                        </code></pre>
+                        <ul>
+                            <li><code>constexpr</code> variable must be initialized immediately with constant expression. <code>const</code> does not need to be initialized with constant expression.</li>
+                            <li><code>constexpr</code> variable must be a <a href="https://en.cppreference.com/w/cpp/named_req/LiteralType">LiteralType</a></li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2><code>constexpr</code> functions</h2>
+                        <pre><code class="cpp" data-trim>
+constexpr int factorial11(int n) {  // C++11 compatible
+{
+    return (n == 0) ? 1 : n * factorial11(n-1);
+}
+
+constexpr int factorial14(int n) {  // C++14
+    if (n == 0) {
+        return 1;
+    } else {
+        return n * factorial14(n-1);
+    }
+}
+                        </code></pre>
+                        <p class="fragment"><code>constexpr</code> function can be evaluated in both compile time and runtime. Evaluation at compile time can occur when the result is assigned to <code>constexpr</code> variable and arguments can be evaluated at compile time.</p>
+
+                    </section>
+                    <section>
+                        <h2><code>constexpr</code> functions restrictions</h2>
+                        <p>In C++11 <code>constexpr</code> functions were very restricted - only 1 return instruction (not returning void). From C++14 the only restrictions are, that function must not:</p>
+                        <ul>
+                            <li class="fragment">contain <code>static</code> or <code>thread_local</code> variables</li>
+                            <li class="fragment">contain uninitialized variables</li>
+                            <li class="fragment">call non <code>constexpr</code> function</li>
+                            <li class="fragment">use non-literal types</li>
+                            <li class="fragment">be virtual (until C++20)</li>
+                            <li class="fragment">use asm code blocks (until C++20)</li>
+                            <li class="fragment">have try-catch block or throw exceptions (until C++20)</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2><code>constexpr</code> constructor</h2>
+                        <pre><code class="cpp" data-trim>
+struct Point
+{
+    constexpr Point(int x, int y)
+        : x_(x), y_(y)
+    {}
+
+    int x_;
+    int y_;
+};
+
+constexpr Point a = { 1, 2 };
+                        </code></pre>
+                        <p>class <code>Point</code> can be used in constexpr computations, eg in constexpr functions. It is a literal type. Constexpr constructor has the same restrictions as a constexpr function and a class cannot have a virtual base class.</p>
+                    </section>
+
+                    <section>
+                        <h2><code>constexpr</code> lambda</h2>
+                        <p>From C++17 all lambda functions are by default implicitly marked as constexpr, if possible. <code>constexpr</code> keyword can also be used explicitly.</p>
+                        <pre><code class="cpp" data-trim>
+auto squared = [](auto x) {             // implicitly constexpr
+    return x * x;
+};
+
+std::array&lt;int, squared(8)&gt; a;          // OK - array&lt;int, 64&gt;
+
+auto squared = [](auto x) constexpr {   // OK
+    return x * x;
+};
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2><code>constexpr if</code></h2>
+                        <pre><code class="cpp" data-trim>
+if constexpr (a &lt; 0)
+    doThis();
+else if constexpr (a &gt; 0)
+    doThat();
+else
+    doSomethingElse();
+                        </code></pre>
+                        <p><code>constexpr if</code> selects only one block of instructions, depening on which condition is met. The condition and other blocks are not compiled in the binary. The condition must be a constant expression.</p>
+                    </section>
+                    <section>
+                        <h2><code>constexpr if</code> in SFINAE</h2>
+                        <p><code>constexpr if</code> allows a simplification of template code used by SFINAE idiom.</p>
+                        <pre><code class="cpp" data-trim data-line-numbers>
+template&lt;class T&gt;   // C++17
+auto compute(T x) {
+    if constexpr(std::is_scalar_v&lt;T&gt;) {
+        return singleComputation(x);
+    } else {
+        return multipleComputation(x);
+    }
+}
+                        </code></pre>
+                        <pre class="fragment"><code class="cpp" data-trim data-line-numbers>
+template&lt;class T&gt;   // C++11
+auto compute(T x) -&gt; enable_if&lt;std::is_scalar&lt;T&gt;::value, int&gt;::type {
+    return singleComputation(x);
+}
+template&lt;class T&gt;
+auto compute(T x) -> enable_if&lt;!std::is_scalar&lt;T&gt;::value, int&gt;::type {
+    return multipleComputation(x);
+}
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Uniform initialization</h2>
+                        <h3>C++98 initialization</h3>
+                        <pre><code class="cpp" data-trim data-line-numbers data-noescape>
+int a;          <span class="fragment">// undefined value</span>
+int b(5);       <span class="fragment">// direct initialization, b = 5</span>
+int c = 10;     <span class="fragment">// copy initialization, c = 10</span>
+int d = int();  <span class="fragment">// default initialization, d = 0</span>
+int e();        <span class="fragment">// function declaration - "most vexing parse"</span>
+
+int values[] = { 1, 2, 3, 4 };  <span class="fragment">// brace initialization of aggregate</span>
+int array[] = { 1, 2, 3.5 };  <span class="fragment">// C++98 - ok, implicit type narrowing</span>
+
+struct P { int a, b; };
+P p = { 20, 40 };   <span class="fragment">// brace initialization of POD</span>
+
+std::complex&lt;double&gt; c(4.0, 2.0); <span class="fragment">// initialization of classes</span>
+
+std::vector&lt;std::string&gt; names; <span class="fragment">// no initialization for list of values</span>
+names.push_back("John");
+names.push_back("Jane");
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Uniform initialization</h2>
+                        <h3>C++11 initialization with {}</h3>
+                        <p><strong>Rationale</strong>: eliminate problematic initialization cases from C++98, initialization of STL containers, have only one universal way of initialization.</p>
+                        <pre><code class="cpp" data-trim data-line-numbers data-noescape>
+int a;          <span class="fragment">// still undefined value</span>
+int b{5};       <span class="fragment">// brace initialization, b = 5</span>
+int c{};        <span class="fragment">// brace initialization, c = 0</span>
+
+int values[] = { 1, 2, 3, 4 };    <span class="fragment">// brace initialization of aggregate</span>
+int array[] = { 1, 2, 3.5 };      <span class="fragment">// C++11: error - implicit type narrowing</span>
+
+struct P { int a, b; };
+P p = { 20, 40 };   <span class="fragment">// brace initialization of POD</span>
+
+std::complex&lt;double&gt; c{4.0, 2.0};   <span class="fragment">// brace initialization calls adequate constructor</span>
+
+std::vector&lt;std::string&gt; names = { "John", "Jane" };  <span class="fragment">// brace initialization of STL container</span>
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>In-class initialization of non-static variables</h2>
+                        <pre><code class="cpp" data-trim data-line-numbers data-noescape>
+struct Foo {
+    Foo() {}
+    Foo(std::string a) : a_(a) {}
+
+    void print() { 
+        std::cout &lt;&lt; a_ &lt;&lt; std::endl; 
+    }
+
+private:
+   std::string a_ = "Foo";              // C++98: error, C++11: OK
+   static const unsigned VALUE = 20u;   // C++98: OK, C++11: OK
+};
+
+Foo().print();          // Foo
+Foo("Bar").print();     // Bar
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2><code>std::initializer_list&lt;T&gt;</code></h2>
+                        <pre><code class="cpp" data-trim data-line-numbers data-noescape>
+auto values = {1, 2, 3, 4, 5};   // values : std::initializer_list&lt;int&gt;
+std::vector&lt;int&gt; v = {1, 2, -3}; // creates vector from
+                                 // std::initalizer_list&lt;int&gt;
+                        </code></pre>
+                        <ul>
+                            <li>Defined in <code>&lt;initializer_list&gt;</code> header</li>
+                            <li>Elements are kept in an array</li>
+                            <li>Elements are immutable</li>
+                            <li>Elements must be copyable</li>
+                            <li>Have limited interface and access via iterators - <code>begin()</code>, <code>end()</code>, <code>size()</code></li>
+                            <li>Should be passed to functions by value</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2><code>std::initializer_list&lt;T&gt;</code></h2>
+                        <pre><code class="cpp" data-trim data-line-numbers data-noescape>
+template&lt;class Type&gt;
+class Bar {
+    std::vector&lt;Type&gt; values_;
+public:
+    Bar(std::initializer_list&lt;Type&gt; values) : values_(values) {}
+    Bar(Type a, Type b) : values_{a, b} {}
+};
+
+<span class="fragment">Bar&lt;int&gt; c = {1, 2, 5, 51};</span>   <span class="fragment">// calls std::initializer_list c-tor</span>
+<span class="fragment">Bar&lt;int&gt; d{1, 2, 5, 51};</span>      <span class="fragment">// calls std::initializer_list c-tor</span>
+<span class="fragment">Bar&lt;int&gt; e = {1, 2};</span>          <span class="fragment">// calls std::initializer_list c-tor</span>
+<span class="fragment">Bar&lt;int&gt; f{1, 2};</span>             <span class="fragment">// calls std::initializer_list c-tor</span>
+<span class="fragment">Bar&lt;int&gt; g(1, 2);</span>             <span class="fragment">// calls Bar(Type a, Type b) c-tor</span>
+<span class="fragment">Bar&lt;int&gt; h = {};</span>              <span class="fragment">// calls std::initializer_list c-tor</span>
+                              <span class="fragment">// or default c-tor if exists</span>
+<span class="fragment">Bar&lt;std::unique_ptr&lt;int&gt;&gt; c = {new int{1}, new int{2}};</span>
+<span class="fragment">// error - std::unique_ptr is non-copyable</span>
+                        </code></pre>
+                        <p class="fragment">C-tor with <code>std::initializer_list</code> has greater priority if other c-tors match.</p>
+                    </section>
+                </section>
+
+                <section data-background="img/coders_school_logo.png" data-background-size="90%">
+                    <h2>Modern C++</h2>
+                    <ul>
+                        <li class="fragment"><code>default</code> keyword</li>
+                        <li class="fragment"><code>delete</code> keyword</li>
+                        <li class="fragment"><code>final</code> keyword</li>
+                        <li class="fragment"><code>override</code> keyword</li>
+                        <li class="fragment"><code>constexpr</code> keyword</li>
+                        <li class="fragment">Uniform initialization</li>
+                        <li class="fragment"><code>std::initializer_list&lt;T&gt;</code></li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                width: 1200,
+                height: 750,
+                slideNumber: true,
+                hash: true,
+                pdfSeparateFragments: false,
+                dependencies: [
+                    { src: 'plugin/externalcode/externalcode.js', condition: function() { return !!document.querySelector( '[data-code]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/markdown/marked.js' },
+                    { src: 'plugin/markdown/markdown.js' },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+        </script>
+    </body>
+</html>

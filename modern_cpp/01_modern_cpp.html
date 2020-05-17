@@ -1,0 +1,492 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Modern C++ - Coders School</title>
+
+        <meta name="description" content="C++11, C++14 and C++17 presentation">
+        <meta name="author" content="Lukasz Ziobron">
+
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/coders.css" id="theme">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="lib/css/monokai.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h1>Modern C++</h1>
+                    <h3>C++11, C++14, C++17 features</h3>
+                    <p>
+                        <small>Created by <a href="https://www.linkedin.com/in/lukaszziobron/">Łukasz Ziobroń</a> and <a href="https://www.linkedin.com/in/kamilszatkowski/">Kamil Szatkowski</a></small>
+                    </p>
+                    <a href="https://coders.school">
+                        <img width="500" data-src="img/coders_school_logo.png" alt="Coders School" class="plain">
+                    </a>
+                </section>
+
+                <section>
+                    <h2>C++ standards</h2>
+                    <p>When C++ was created? <span class="fragment">1979</span></p>
+                    <ul>
+                        <li class="fragment fade-in-then-semi-out">1998 - first ISO C++ standard - C++98</li>
+                        <li class="fragment fade-in-then-semi-out">2003 - TC1 (Technical Corrigendum 1) published as C++03. Bug fixes for C++98</li>
+                        <li class="fragment fade-in-then-semi-out">2005 - Technical Report 1 published (std::tr1 namespace)</li>
+                        <li class="fragment fade-in-then-semi-out">2011 - ratified C++0x as C++11</li>
+                        <li class="fragment fade-in-then-semi-out">2013 - full version of C++1y draft</li>
+                        <li class="fragment fade-in-then-semi-out">2014 - C++1y published as C++14</li>
+                        <li class="fragment fade-in-then-semi-out">2017 - C++1z published as C++17</li>
+                        <li class="fragment fade-in-then-semi-out">2020 - C++2a should be published as C++20</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>C++ standards</h2>
+                    <h3>Compilers support</h3>
+                    <p><small><a href="https://gcc.gnu.org/projects/cxx-status.html">gcc</a> - <a href="https://clang.llvm.org/cxx_status.html">clang</a></small></p>
+                    <div class="box" style="width: 45%; left: 0;">
+                        <h3>C++20</h3>
+                        <ul>
+                            <li>Full support: not implemented yet</li>
+                            <li>Compiler flags: -std=c++2a</li>
+                        </ul>
+                    </div>
+                    <div class="box" style="width: 45%; right: 0;">
+                        <h3>C++17</h3>
+                        <ul>
+                            <li>Full support: gcc7, clang5</li>
+                            <li>Compiler flags: -std=c++17, -std=c++1z</li>
+                        </ul>
+                    </div>
+                    <div class="box" style="width: 45%; left: 0; top: 450px">
+                        <h3>C++14</h3>
+                        <ul>
+                            <li>Full support: gcc5, clang3.4</li>
+                            <li>Compiler flags: -std=c++14, -std=c++1y</li>
+                            <li><u>Enabled by default since gcc6.1</u></li>
+                        </ul>
+                    </div>
+                    <div class="box" style="width: 45%; right: 0; top: 450px">
+                        <h3>C++11</h3>
+                        <ul>
+                            <li>Full support: gcc4.8.1, clang3.3</li>
+                            <li>Compiler flags: -std=c++11, -std=c++0x</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h2><code>static_assert</code></h2>
+                    <div class="box" style="width: 5%; right: 0; top: 0;">
+                        C++11
+                    </div>
+                    <p><strong>Rationale</strong>: Preventing compilation on user defined conditions (usually specific types)</p>
+                    <p>Performs compile-time assertion checking. Usually used with type traits library.</p>
+                    <p>The message is optional from C++17.</p>
+                    <pre><code class="cpp" data-trim>
+template &lt;class T&gt;
+void swap(T& a, T& b)
+{
+    static_assert(std::is_copy_constructible&lt;T&gt;::value, "Swap requires copying");
+    static_assert(std::is_nothrow_move_constructible_v&lt;T&gt; &&
+                  std::is_nothrow_move_assignable_v&lt;T&gt;);
+    auto c = b;
+    b = a;
+    a = c;
+}
+                    </code></pre>
+                    <!-- <pre><code data-code="./src/static_assert.hpp" data-trim></code></pre> -->
+                </section>
+
+                <!--section>
+                    <section>
+                        <h2><code>nullptr</code></h2>
+                        <ul>
+                            <li>value for pointer that points to nothing</li>
+                            <li>more expressive and safer than NULL/0 constant</li>
+                            <li>has defined type <code>std::nullptr_t</code></li>
+                            <li>solves the problem with overloaded functions taking a pointer or an integer as an argument.</li>
+                    </section>
+                    <section>
+                        <h2><code>nullptr</code></h2>
+                        <p>Pointer comparison</p>
+                        <pre><code class="cpp" data-trim>
+int* p1 = nullptr;
+int* p2 = NULL;
+int* p3 = 0;
+
+p2 == p1; // true
+p3 == p1; // true
+
+int* p {}; // p is set to nullptr
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2><code>nullptr</code></h2>
+                        <p>Overload resolution</p>
+                        <pre><code class="cpp" data-trim>
+void foo(int);
+
+foo(0);         // calls foo(int)
+foo(NULL);      // calls foo(int)
+foo(nullptr);   // compile time error
+                        </code></pre>
+                        <pre><code class="cpp" data-trim>
+void bar(int);
+void bar(void*);
+void bar(std::nullptr_t);
+
+bar(0);         // calls bar(int)
+bar(NULL);      // calls bar(int) if NULL is 0, may be ambigous if NULL is 0L
+bar(nullptr);   // calls bar(std::nullptr_t) if provided, bar(void*) otherwise
+                        </code></pre-->
+                        <!-- <pre><code data-code="./src/static_assert.hpp" data-trim></code></pre> -->
+                    <!--/section>
+                </section -->
+
+                <section>
+                    <section>
+                        <h2><code>using</code> alias</h2>
+                        <div class="box" style="width: 5%; right: 0; top: 0;">
+                            C++11
+                        </div>
+                        <p><strong>Rationale</strong>: More intuitive alias creation.</p>
+                        <p>A type alias is a name that refers to a previously defined type. It could be created with typedef.</p>
+                        <p>From C++11 type aliases should be created with <code>using</code> keyword.</p>
+                        <pre><code class="cpp" data-trim data-line-numbers="2,7">
+typedef std::ios_base::fmtflags Flags;
+using Flags = std::ios_base::fmtflags;
+Flags fl = std::ios_base::dec;
+
+typedef std::vector&lt;std::shared_ptr&lt;Socket&gt;&gt; SocketContainer;
+std::vector&lt;std::shared_ptr&lt;Socket&gt;&gt; typedef SocketContainer;  // equal to above
+using SocketContainer = std::vector&lt;std::shared_ptr&lt;Socket&gt;&gt;;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Template alises</h3>
+                        <pre><code class="cpp" data-trim>
+                            template &lt;typename T&gt;
+                            using StrKeyMap = std::map&lt;std::string, T&gt;;
+
+                            StrKeyMap&lt;int&gt; my_map; // std::map&lt;std::string, int&gt;
+                        </code></pre>
+                        <p>Type alias can be parametrized with templates. It was impossible with typedef.</p>
+                        <p>Template aliases cannot be specialized.</p>
+                    </section>
+                    <section>
+                        <h3>Constructors inheritance</h3>
+                        <pre><code class="cpp" data-trim data-line-numbers="7">
+struct A {
+    explicit A(int);
+    int a;
+};
+
+struct B : A {
+    using A::A;  // implicit declaration of B::B(int)
+    B(int, int); // overloaded inherited Base ctor
+};
+                        </code></pre>
+                        <ul style="font-size: 0.8em">
+                            <li class="fragment">Derived class constructors are generated implicitly, only if they are used</li>
+                            <li class="fragment">Derived class constructors take the same arguments as base class constructors</li>
+                            <li class="fragment">Derived class constructor calls according base class constructor</li>
+                            <li class="fragment">Constructor inheritance in a class that adds a new field might be risky - new fields can be uninitialized</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Scoped <code>enum</code></h2>
+                        <div class="box" style="width: 5%; right: 0; top: 0;">
+                            C++11
+                        </div>
+                        <p><strong>Rationale</strong>: Stronger and less error-prone enumeration types.</p>
+                        <pre style="width: 40%; position: absolute"><code class="cpp" data-trim>
+enum Colors {
+    RED = 10,
+    ORANGE,
+    GREEN
+};
+Colors a = RED;
+int b = GREEN;
+
+enum Fruits {
+    ORANGE,
+    BANANA
+};
+
+Colors c = ORANGE;  // 11 or 0?        // Hopefully: error: ‘ORANGE’ conflicts with a previous declaration
+                        </code></pre>
+                        <pre class="fragment" style="width: 56%; position: absolute; right: 0"><code class="cpp" data-trim>
+enum class Languages {
+    ENGLISH,
+    GERMAN,
+    POLISH
+};
+Languages a = Languages::ENGLISH;
+// Languages b = GERMAN; 
+// int c = Languages::ENGLISH;
+int d = static_cast&lt;int&gt;(Languages::ENGLISH);
+                        </code></pre>
+                        <div class="box fragment" style="width: 53%; right: 0; top: 470px;">
+                            <ul>
+                                <li>Introduced in C++11</li>
+                                <li>Restricts range of defined constants only to those defined in an enum class</li>
+                                <li>Enum values must be accessed with the enum name scope</li>
+                                <li>Does not allow implicit conversions, <code>static_cast</code> must be used</li>
+                                <li><code>enum class == enum struct</code></li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section>
+                        <h2><code>enum</code> base</h2>
+                        <pre><code class="cpp" data-trim data-noescape>
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+
+enum Colors   { YELLOW = 10, ORANGE };
+enum BigValue { VALUE = std::numeric_limits&lt;long&gt;::max() };
+<span class="fragment">enum RgbColors : unsigned char {
+    RED = 0x01,
+    GREEN = 0x02,
+    BLUE = 0x04,
+    // BLACK = 0xFF + 1  // error: enumerator value 256 is outside
+};                       // the range of underlying type ‘unsigned char’
+</span>
+int main() {
+    std::cout &lt;&lt; sizeof(Colors) &lt;&lt; std::endl;    // 4 - sizeof(int)
+    std::cout &lt;&lt; sizeof(BigValue) &lt;&lt; std::endl;  // 8 - sizeof(long)
+<span class="fragment">    std::cout &lt;&lt; sizeof(RgbColors) &lt;&lt; std::endl; // 1 - sizeof(unsigned char)</span>
+    return 0;
+}
+                        </code></pre>
+                        <div class="box fragment" style="width: 37%; right: 60px; top: 100px;">
+                            <ul>
+                                <li class="fragment">Default enum size is <code>sizeof(int)</code></li>
+                                <li class="fragment"><code>Enum</code> underlying type is extended automatically if values greater than <code>int</code> are provided</li>
+                                <li class="fragment">To save some memory we can define the underlying type using inheritance</li>
+                                <li class="fragment">A compiler will not allow defining value greater than the defined base can hold</li>
+                                <li class="fragment">Inheritance work on both <code>enum</code> and <code>enum class</code></li>
+                            </ul>
+                        </div>
+                        <a href="https://ideone.com/e.js/8sR1XK" style="font-size: 0.4em">Change the code in ideone.com</a>
+                    </section>
+                    <section>
+                        <h2><code>enum</code> forward declaration</h2>
+                        <p>For enums with the defined underlying type, it is possible to provide only a forward declaration, if values do not need to be known.</p>
+                        <p>There will be no need to recompile source file if new enum values are added.</p>
+                        <pre><code class="cpp" data-trim>
+                            enum Colors : unsigned int;
+                            enum struct Languages : unsigned char;
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Automatic type deduction</h2>
+                    <div class="box" style="width: 5%; right: 0; top: 0;">
+                        C++11
+                    </div>
+                    <section>
+                        <h3><code>auto</code> keyword</h3>
+                        <p><strong>Rationale</strong>: Not important (but strongly defined) types, less typing, less refactoring.</p>
+                        <pre><code class="cpp" data-trim>
+auto a;         // error: declaration of ‘auto a’ has no initializer
+auto i = 42;    // i is int
+auto u = 42u;   // u is unsigned
+auto d = 42.0;  // d is double
+auto f = 42.0f; // f is float
+
+double f();
+auto r1 = f();  // r1 is double
+
+std::set&lt;std::string&gt; collection;
+auto it = collection.begin(); // it is std::set&lt;std::string&gt;::iterator
+                        </code></pre>
+                        <div class="box fragment" style="width: 37%; right: 60px; top: 190px;">
+                            <ul>
+                                <li>A compiler can automatically deduce the type of variable during initialization</li>
+                                <li>Deduction is made from a literal, other variable or a function return type</li>
+                                <li>The same rules as for templates deduction are applied</li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section>
+                        <h3>Variable modifiers</h3>
+                        <pre><code class="cpp" data-trim>
+int func() { return 10; }
+
+int main() {
+    const auto& v1 = func(); // v1 is const int&
+    const auto v2 = func();  // v2 is const int
+    // auto& v3 = func();    // error: cannot bind non-const lvalue reference
+                                // of type ‘int&’ to an rvalue of type ‘int’
+    auto v4 = func();        // v4 is int
+    return 0;
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Deduction rules for references</h3>
+                        <pre><code class="cpp" data-trim>
+const vector&lt;int&gt; values;
+auto v1 = values;   // v1 : vector&lt;int&gt;&
+auto& v2 = values;  // v2 : const vector&lt;int&gt;
+
+volatile long clock = 0L;
+auto c1 = clock;    // c1 : long
+auto& c2 = clock;   // c2 : volatile long&
+        
+Gadget items[10];
+auto g1 = items;    // g1 : Gadget*
+auto& g2 = items;   // g2 : Gadget(&)[10] - a reference to 
+                    // the 10-elementh array of Gadgets
+
+int func(double) { return 10; }
+auto f1 = func;     // f1 : int (*)(double)
+auto& f2 = func ;   // f2: int (&)(double)
+                        </code></pre>
+                        <div class="box fragment" style="width: 37%; right: 60px; top: 82px;">
+                            <ul>
+                                <li>Reference means the same object with the same properties</li>
+                                <li>Reference preserves cv-qualifiers (const, volatile)</li>
+                                <li>Copy drops cv-qualifiers</li>
+                                <li>Copy of array decays to a pointer</li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section>
+                        <h3>Function declaration with arrow</h3>
+                        <pre><code class="cpp" data-trim>
+int sum(int a, int b);
+auto sum(int a, int b) -> int;
+
+
+auto isEven = [](int a) -> bool {
+    return a % 2;
+}
+                        </code></pre>
+                        <p class="fragment">Introduced to allow definition of the type returned from lambda functions</p>
+                    </section>
+                    <section>
+                        <h3>Deduction of a function returned type</h3>
+                        <pre><code class="cpp" data-trim>
+auto multiply(int x, int y) {
+    return x * y;
+}
+
+auto get_name(int id) {
+    if (id == 1)
+        return std::string("Gadget");
+    else if (id == 2)
+        return std::string("SuperGadget");
+    return string("Unknown");
+}
+
+auto factorial(int n) {
+    if (n == 1)
+        return 1;
+    return factorial(n - 1) * n;
+}
+                        </code></pre>
+                        <div class="box fragment" style="width: 37%; right: 60px; top: 82px;">
+                            <ul>
+                                <li>Introduced in C++14</li>
+                                <li>Deduction mechanism is the same as for deduction of variable types</li>
+                                <li>All <code>return</code> instructions must return the same type</li>
+                                <li>Recursion allowed only if recursive function call is not a first <code>return</code> statement
+                            </ul>
+                        </div>
+                    </section>
+                    <section>
+                        <h2><code>decltype</code></h2>
+                        <p><strong>Rationale</strong>: Deduction provided in contexts where auto is not allowed.</p>
+                        <p><code>decltype</code> allows a compiler to deduce the type of the variable or expression, eg. the returned type can be deduced from function parameters.</p> 
+                        <pre><code class="cpp" data-trim>
+std::map&lt;std::string, float&gt; collection;
+
+decltype(collection) otherCollection;    // otherCollection has type of collection
+decltype(collection)::mapped_type value; // value is float
+
+template &lt;typename T1, typename T2&gt;
+auto add(T1 a, T2 b) -> decltype(a + b)  // from C++14 decltype not neccessary
+{
+    return a + b;
+}
+                        </code></pre>
+                        <p class="fragment"><code>decltype((expression))</code> will be presented after move semantics :)</p>
+                    </section>
+                    <section>
+                        <h2><code>decltype(auto)</code></h2>
+                        <p><code>decltype(auto)</code> deduction mechanism preserves type modifiers (references, const, volatile).</p>
+                        <p><code>auto</code> deduction mechanism does not preserve type modifiers.</p>
+                        <pre><code class="cpp" data-trim>
+                            template&lt;class FunctionType, class... Args&gt;
+                            decltype(auto) Example(FunctionType fun, Args&&... args)
+                            {
+                                return fun(std::forward&lt;Args&gt;(args)...);
+                            }
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section data-background="img/coders_school_logo.png" data-background-size="90%">
+                    <h2>Modern C++</h2>
+                    <ul>
+                        <li class="fragment">C++ language history and standards</li>
+                        <li class="fragment"><code>static_assert</code></li>
+                        <li class="fragment"><code>using</code> alias</li>
+                        <li class="fragment">Template aliases</li>
+                        <li class="fragment">Constructor inheritance</li>
+                        <li class="fragment">Scoped <code>enum</code></li>
+                        <li class="fragment"><code>enum</code> base</li>
+                        <li class="fragment"><code>enum</code> forward declaration</li>
+                        <li class="fragment"><code>auto</code> keyword</li>
+                        <li class="fragment">Deduction rules</li>
+                        <li class="fragment">Function declaration with arrow</li>
+                        <li class="fragment"><code>decltype</code> keyword</li>
+                        <li class="fragment"><code>decltype(auto)</code></li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                width: 1200,
+                height: 750,
+                slideNumber: true,
+                hash: true,
+                pdfSeparateFragments: false,
+                dependencies: [
+                    { src: 'plugin/externalcode/externalcode.js', condition: function() { return !!document.querySelector( '[data-code]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/markdown/marked.js' },
+                    { src: 'plugin/markdown/markdown.js' },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+        </script>
+    </body>
+</html>
