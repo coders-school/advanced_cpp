@@ -30,8 +30,8 @@ struct P { int a, b };
 1. <!-- .element: class="fragment highlight-green" --> <code>P v = { 1, 4 };</code>
 1. <!-- .element: class="fragment highlight-green" --> <code>P v{1, 4};</code>
 1. <!-- .element: class="fragment highlight-red" --> <code>P v(1, 4);</code>
-1. <!-- .element: class="fragment highlight-green" --> <code>std::vector<int> v = { 1, 2, 3, 4 };</code>
-1. <!-- .element: class="fragment highlight-red" --> <code>std::vector<int> v(1, 2, 3, 4);</code>
+1. <!-- .element: class="fragment highlight-green" --> <code>std::vector&lt;int> v = { 1, 2, 3, 4 };</code>
+1. <!-- .element: class="fragment highlight-red" --> <code>std::vector&lt;int> v(1, 2, 3, 4);</code>
 1. <!-- .element: class="fragment highlight-red" --> <code>int v[] = { 1, 3, 5, 6.6 };</code>
 
 ___

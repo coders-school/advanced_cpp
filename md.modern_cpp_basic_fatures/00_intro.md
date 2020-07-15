@@ -66,5 +66,9 @@ ___
 </ul>
 
 Note:
-Vegas rule: WHat happens in Vegas, it stays in Vegas.
+Vegas rule: What happens in Vegas, it stays in Vegas.
 If you want to complain about the employer, I won't tell anyone
+
+___
+
+### [Link to presentation on GitHub](https://github.com/coders-school/advanced_cpp/tree/master/md.modern_cpp_basic_fatures)

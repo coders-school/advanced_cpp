@@ -50,8 +50,8 @@ ___
 
 ```cpp
 const vector<int> values;
-auto v1 = values;   // v1 : vector<int>&
-auto& v2 = values;  // v2 : const vector<int>
+auto v1 = values;   // v1 : vector<int>
+auto& v2 = values;  // v2 : const vector<int>&
 
 volatile long clock = 0L;
 auto c1 = clock;    // c1 : long

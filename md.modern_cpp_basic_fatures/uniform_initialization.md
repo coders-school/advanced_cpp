@@ -90,11 +90,11 @@ ___
 ## Constructor priority
 
 <pre><code class="cpp" data-trim data-line-numbers data-noescape>
-template<class Type>
+template&lt;class Type>
 class Bar {
-    std::vector<Type> values_;
+    std::vector&lt;Type> values_;
 public:
-    Bar(std::initializer_list<Type> values) : values_(values) {}
+    Bar(std::initializer_list&lt;Type> values) : values_(values) {}
     Bar(Type a, Type b) : values_{a, b} {}
 };
 
