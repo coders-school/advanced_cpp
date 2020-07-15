@@ -111,3 +111,17 @@ public:
 
 C-tor with <code>std::initializer_list</code> has greater priority, even if other c-tors match.
 <!-- .element: class="fragment fade-in" -->
+
+___
+
+## Exercise
+
+Use `initializer_list` to initialize the collection.
+
+Add a new constructor to Shape - `Shape(Color c)`. What happens?
+
+Use constructor inheritance to allow initialization of all shapes providing only a Color as a parameter.
+
+Create some shapes providing a Color only param.
+
+Add in-class field initialization for all shapes to safely use inherited constructor.

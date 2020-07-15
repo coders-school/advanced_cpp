@@ -86,6 +86,14 @@ integral_only(3.0); // error - use of deleted function
 
 ___
 
+## Exercise
+
+Mark copy constructors as default.
+
+Delete `getY()` method in `Square` and all default (non-parametric) constructors of shapes.
+
+___
+
 ## `final` keyword
 
 ```cpp
@@ -150,3 +158,13 @@ struct WithOverride : Base {
 </code></pre>
 
 <p class="fragment" style="position: absolute; width: 100%; top: 580px"><code>override</code> declaration enforces a compiler to check, if given virtual function is declared in the same way in a base class.</p>
+
+___
+
+## Exercise
+
+Mark `Circle` class as `final`.
+
+Mark `getX()` in Rectangle as `final`. What is the problem?
+
+Mark all overridden virtual methods. Can you spot the problem?

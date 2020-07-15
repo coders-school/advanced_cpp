@@ -63,3 +63,9 @@ struct B : A {
 * <!-- .element: class="fragment fade-in" --> Derived class constructors take the same arguments as base class constructors
 * <!-- .element: class="fragment fade-in" --> Derived class constructor calls according base class constructor
 * <!-- .element: class="fragment fade-in" --> Constructor inheritance in a class that adds a new field might be risky - new fields can be uninitialized
+
+___
+
+## Exercise
+
+Change a `typedef` to `using` alias.

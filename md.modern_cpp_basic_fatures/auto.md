@@ -149,15 +149,16 @@ ___
 ```
 
 ___
+<!-- .slide: data-background="#cf802a" -->
 
 ## Exercise
 
 Put auto wherever you think is good.
 
-Use range-based for loops.
+Use range-based for loops wherever possible.
 
 ### Let's have some fun :)
 <!-- .element: class="fragment fade-in" -->
 
-Connect to my VSC and edit my program simultaneously
+Connect to my VSC and edit my program simultaneously.
 <!-- .element: class="fragment fade-in" -->

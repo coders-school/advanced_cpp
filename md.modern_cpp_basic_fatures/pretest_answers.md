@@ -52,7 +52,17 @@ ___
 
 ## Post-test
 
-The link to post-test will be sent to you in a next week :)
+The link to post-test will be sent to you in a next week.
+
+It's better to forget some of the content and refresh your knowledge later.
+
+It enhances knowledge retention :)
+
+___
+
+## Homework
+
+Take a look into `README.md` file from modern_cpp repository. You can complete all tasks and raise a Pull Request if you wish me to check your homework.
 
 ___
 

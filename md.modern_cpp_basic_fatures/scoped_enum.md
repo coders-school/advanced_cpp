@@ -103,3 +103,15 @@ enum Colors : unsigned int;
 enum struct Languages : unsigned char;
 ```
 <!-- .element: class="fragment fade-in" -->
+
+___
+
+## Exercise
+
+Write a new scoped enum named `Color` and define in it 3 colors of your choice.
+
+Inherit from `unsigned char`.
+
+Add a new field: `Color color` in the `Shape` class, so that every shape can have its own defined color.
+
+Add a default color value in a Shape class.
