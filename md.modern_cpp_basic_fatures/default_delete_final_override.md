@@ -26,7 +26,13 @@ ___
 ## `default` keyword
 
 * <!-- .element: class="fragment fade-in" --> <code>default</code> declaration enforces a compiler to generate default implicit implementation for marked functions
-* <!-- .element: class="fragment fade-in" --> 6 special functions can be marked as <code>default</code>: default c-tor, copy c-tor, copy assignment operator, move c-tor, move assignment operator, destructor
+* <!-- .element: class="fragment fade-in" --> 6 special functions can be marked as <code>default</code>:
+  * default c-tor
+  * copy c-tor
+  * copy assignment operator
+  * move c-tor
+  * move assignment operator
+  * destructor
 * <!-- .element: class="fragment fade-in" --> Operations declared as <code>default</code> are treated as user-declared (not implicitly-declared)
 * <!-- .element: class="fragment fade-in" --> The default implementation of default c-tor is calling default c-tor for every member
 * <!-- .element: class="fragment fade-in" --> The default implementation of d-tor is calling d-tor for every member
@@ -56,7 +62,7 @@ ___
 ## `delete` keyword
 
 * <!-- .element: class="fragment fade-in" --> <code>delete</code> declaration removes marked function
-* <!-- .element: class="fragment fade-in" --> Calling a deleted function or taking an address causes a compilation error
+* <!-- .element: class="fragment fade-in" --> Calling a deleted function or taking its address causes a compilation error
 * <!-- .element: class="fragment fade-in" --> No code is generated for deleted function
 * <!-- .element: class="fragment fade-in" --> Deleted function are treated as user-declared
 * <!-- .element: class="fragment fade-in" --> <code>delete</code> declaration can be used on any function, not only special class member functions
@@ -90,6 +96,7 @@ struct B : A {};    // compilation error
 ```
 
 `final` keyword used after a class/struct declaration blocks inheritance from this class.
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
@@ -109,6 +116,7 @@ struct B : A {
 ```
 
 `final` used after a virtual function declaration blocks overriding the implementation in derived classes.
+<!-- .element: class="fragment fade-in" -->
 
 ___
 

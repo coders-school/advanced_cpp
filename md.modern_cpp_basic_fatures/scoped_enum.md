@@ -3,8 +3,6 @@
 
 ___
 
-**Rationale**: Stronger and less error-prone enumeration types.
-
 ## Standard `enum`
 
 ```cpp
@@ -13,8 +11,9 @@ enum Colors {
     ORANGE,
     GREEN
 };
-Colors a = RED;
-int b = GREEN;
+
+Colors a = RED;     // OK
+int b = GREEN;      // OK
 
 enum Fruits {
     ORANGE,
@@ -41,6 +40,10 @@ Languages a = Languages::ENGLISH;
 // int c = Languages::ENGLISH;
 int d = static_cast<int>(Languages::ENGLISH);   // only explicit cast allowed
 ```
+<!-- .element: class="fragment fade-in" -->
+
+**Rationale**: Stronger and less error-prone enumeration types.
+<!-- .element: class="fragment fade-in" -->
 
 * <!-- .element: class="fragment fade-in" --> Introduced in C++11
 * <!-- .element: class="fragment fade-in" --> Restricts range of defined constants only to those defined in an enum class
@@ -80,7 +83,7 @@ ___
 ## `enum` size
 
 * <!-- .element: class="fragment fade-in" --> Default enum size is <code>sizeof(int)</code>
-* <!-- .element: class="fragment fade-in" --> <code>Enum</code> underlying type is extended automatically if values greater than <code>int</code> are provided
+* <!-- .element: class="fragment fade-in" --> <code>enum</code> underlying type is extended automatically if values greater than <code>int</code> are provided
 * <!-- .element: class="fragment fade-in" --> To save some memory we can define the underlying type using inheritance
 * <!-- .element: class="fragment fade-in" --> A compiler will not allow defining value greater than the defined base can hold
 * <!-- .element: class="fragment fade-in" --> Inheritance work on both <code>enum</code> and <code>enum class</code>
@@ -90,10 +93,13 @@ ___
 ## `enum` forward declaration
 
 For enums with the defined underlying type, it is possible to provide only a forward declaration, if values do not need to be known.
+<!-- .element: class="fragment fade-in" -->
 
 There will be no need to recompile source file if new enum values are added.
+<!-- .element: class="fragment fade-in" -->
 
 ```cpp
 enum Colors : unsigned int;
 enum struct Languages : unsigned char;
 ```
+<!-- .element: class="fragment fade-in" -->

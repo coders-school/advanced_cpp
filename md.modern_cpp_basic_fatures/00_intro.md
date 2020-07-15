@@ -62,5 +62,9 @@ ___
     <li class="fragment fade-in">🎰 Vegas rule</li>
     <li class="fragment fade-in">🗣 Discussion, not a lecture</li>
     <li class="fragment fade-in">☕️ Additional breaks on demand</li>
-    <li class="fragment fade-in">⌚️ Be on time</li>
+    <li class="fragment fade-in">⌚️ Be on time after breaks</li>
 </ul>
+
+Note:
+Vegas rule: WHat happens in Vegas, it stays in Vegas.
+If you want to complain about the employer, I won't tell anyone

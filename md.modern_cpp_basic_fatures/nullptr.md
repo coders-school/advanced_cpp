@@ -3,16 +3,7 @@
 
 ___
 
-## `nullptr`
-
-* <!-- .element: class="fragment fade-in" --> value for a pointer that points to nothing
-* <!-- .element: class="fragment fade-in" --> more expressive and safer than <code>NULL/0</code> constant
-* <!-- .element: class="fragment fade-in" --> has defined type <code>std::nullptr_t</code>
-* <!-- .element: class="fragment fade-in" --> solves the problem with overloaded functions taking a pointer or an integer as an argument
-
-___
-
-### Pointer comparison
+## Pointer comparison
 
 ```cpp
 int* p1 = nullptr;
@@ -27,7 +18,7 @@ int* p {}; // p is set to nullptr
 
 ___
 
-### Overload resolution
+## Overload resolution
 
 ```cpp
 void foo(int);
@@ -36,6 +27,7 @@ foo(0);        // calls foo(int)
 foo(NULL);     // calls foo(int)
 foo(nullptr);  // compile time error
 ```
+<!-- .element: class="fragment fade-in" -->
 
 ```cpp
 void bar(int);
@@ -46,3 +38,13 @@ bar(0);        // calls bar(int)
 bar(NULL);     // calls bar(int) if NULL is 0, may be ambiguous if NULL is 0L
 bar(nullptr);  // calls bar(std::nullptr_t) if provided, bar(void*) otherwise
 ```
+<!-- .element: class="fragment fade-in" -->
+
+___
+
+## `nullptr`
+
+* <!-- .element: class="fragment fade-in" --> value for a pointer that points to nothing
+* <!-- .element: class="fragment fade-in" --> more expressive and safer than <code>NULL/0</code> constant
+* <!-- .element: class="fragment fade-in" --> has defined type <code>std::nullptr_t</code>
+* <!-- .element: class="fragment fade-in" --> solves the problem with overloaded functions taking a pointer or an integer as an argument

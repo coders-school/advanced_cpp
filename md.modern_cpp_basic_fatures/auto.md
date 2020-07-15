@@ -5,8 +5,6 @@ ___
 
 ## `auto` keyword
 
-**Rationale**: Not important (but strongly defined) types, less typing, less refactoring.
-
 ```cpp
 auto a;         // error: declaration of ‘auto a’ has no initializer
 auto i = 42;    // i is int
@@ -20,6 +18,9 @@ auto r1 = f();  // r1 is double
 std::set<std::string> collection;
 auto it = collection.begin(); // it is std::set<std::string>::iterator
 ```
+
+**Rationale**: Not important (but strongly defined) types, less typing, less refactoring.
+<!-- .element: class="fragment fade-in" -->
 
 * <!-- .element: class="fragment fade-in" --> A compiler can automatically deduce the type of variable during initialization
 * <!-- .element: class="fragment fade-in" --> Deduction is made from a literal, other variable or a function return type
@@ -67,7 +68,7 @@ auto& f2 = func ;   // f2: int (&)(double)
 ```
 
 * <!-- .element: class="fragment fade-in" --> Reference means the same object with the same properties
-* <!-- .element: class="fragment fade-in" --> Reference preserves cv-qualifiers (const, volatile)
+* <!-- .element: class="fragment fade-in" --> Reference preserves cv-qualifiers (<code>const</code>, <code>volatile</code>)
 * <!-- .element: class="fragment fade-in" --> Copy drops cv-qualifiers
 * <!-- .element: class="fragment fade-in" --> Copy of array decays to a pointer
 
@@ -85,7 +86,7 @@ auto isEven = [](int a) -> bool {
 }
 ```
 
-Introduced to allow definition of the type returned from lambda functions
+Introduced to allow definition of the type returned from lambda functions.
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -120,7 +121,7 @@ auto factorial(int n) {
 
 ___
 
-## range based for loop
+## range-based for loop
 
 ```cpp
 std::vector<int> v = {0, 1, 2, 3, 4, 5};
@@ -133,7 +134,7 @@ std::cout << '\n';
 
 ___
 
-### Generated code for range based for loop
+### Generated code for-range based for loop
 
 ```cpp
 {
@@ -146,3 +147,17 @@ ___
     }
 }
 ```
+
+___
+
+## Exercise
+
+Put auto wherever you think is good.
+
+Use range-based for loops.
+
+### Let's have some fun :)
+<!-- .element: class="fragment fade-in" -->
+
+Connect to my VSC and edit my program simultaneously
+<!-- .element: class="fragment fade-in" -->

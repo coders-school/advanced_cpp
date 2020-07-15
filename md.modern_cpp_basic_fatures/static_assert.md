@@ -5,11 +5,8 @@ ___
 
 ## `static_assert`
 
-**Rationale**: Preventing compilation on user defined conditions (usually specific types)
-
-Performs compile-time assertion checking. Usually used with type traits library.
-
-The message is optional from C++17.
+**Rationale**: Preventing compilation on user defined conditions (usually specific types).
+<!-- .element: class="fragment fade-in" -->
 
 ```cpp
 template <class T>
@@ -24,3 +21,10 @@ void swap(T& a, T& b)
     a = c;
 }
 ```
+<!-- .element: class="fragment fade-in" -->
+
+Performs compile-time assertion checking. Usually used with `<type_traits>` library.
+<!-- .element: class="fragment fade-in" -->
+
+The message is optional from C++17.
+<!-- .element: class="fragment fade-in" -->

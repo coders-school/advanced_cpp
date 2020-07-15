@@ -6,7 +6,7 @@
 
 ___
 
-## 1. What type is deduced by `auto` in a following statement?
+## 1. What is the type of variable `v`?
 
 ```cpp
 int i = 42;
@@ -36,7 +36,7 @@ struct P { int a, b };
 
 ___
 
-## 3. Which of the following elements can be defined as `= delete`?
+## 3. Which of the following elements can be defined as deleted (`= delete;`)?
 
 1. <!-- .element: class="fragment highlight-green" --> default constructor
 1. <!-- .element: class="fragment highlight-green" --> copy constructor

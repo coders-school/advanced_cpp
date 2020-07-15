@@ -3,20 +3,22 @@
 
 ___
 
-## C++ standards
+## The history of C++ standardization
 
-When C++ was created? <span class="fragment">1979</span>
+### When C++ was created?
+<!-- .element: class="fragment fade-in" -->
 
-<ul>
-    <li class="fragment fade-in-then-semi-out">1998 - first ISO C++ standard - C++98</li>
-    <li class="fragment fade-in-then-semi-out">2003 - TC1 (Technical Corrigendum 1) published as C++03. Bug fixes for C++98</li>
-    <li class="fragment fade-in-then-semi-out">2005 - Technical Report 1 published (std::tr1 namespace)</li>
-    <li class="fragment fade-in-then-semi-out">2011 - ratified C++0x as C++11</li>
-    <li class="fragment fade-in-then-semi-out">2013 - full version of C++1y draft</li>
-    <li class="fragment fade-in-then-semi-out">2014 - C++1y published as C++14</li>
-    <li class="fragment fade-in-then-semi-out">2017 - C++1z published as C++17</li>
-    <li class="fragment fade-in-then-semi-out">2020 - C++2a should be published as C++20</li>
-</ul>
+#### 1979
+<!-- .element: class="fragment fade-in" -->
+
+* <!-- .element: class="fragment fade-in-then-semi-out"--> 1998 - first ISO C++ standard - C++98
+* <!-- .element: class="fragment fade-in-then-semi-out"--> 2003 - TC1 (Technical Corrigendum 1) published as C++03. Bug fixes for C++98
+* <!-- .element: class="fragment fade-in-then-semi-out"--> 2005 - Technical Report 1 published (<code>std::tr1</code> namespace)
+* <!-- .element: class="fragment fade-in-then-semi-out"--> 2011 - ratified C++0x as C++11
+* <!-- .element: class="fragment fade-in-then-semi-out"--> 2013 - full version of C++1y draft
+* <!-- .element: class="fragment fade-in-then-semi-out"--> 2014 - C++1y published as C++14
+* <!-- .element: class="fragment fade-in-then-semi-out"--> 2017 - C++1z published as C++17
+* <!-- .element: class="fragment fade-in-then-semi-out"--> 2020 - C++2a should be published as C++20
 
 ___
 

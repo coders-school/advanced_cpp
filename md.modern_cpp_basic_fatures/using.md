@@ -1,24 +1,34 @@
-## `using` alias
+<!-- .slide: data-background="#111111" -->
+# `using` alias
 
-**Rationale**: More intuitive alias creation.
+___
 
-A type alias is a name that refers to a previously defined type. It could be created with typedef.
-
-From C++11 type aliases should be created with `using` keyword.
+## Type aliasing
 
 ```cpp
 typedef std::ios_base::fmtflags Flags;
-using Flags = std::ios_base::fmtflags;
+using Flags = std::ios_base::fmtflags;  // the same as above
 Flags fl = std::ios_base::dec;
+```
+<!-- .element: class="fragment fade-in" -->
 
+```cpp
 typedef std::vector<std::shared_ptr<Socket>> SocketContainer;
 std::vector<std::shared_ptr<Socket>> typedef SocketContainer; // correct ;)
 using SocketContainer = std::vector<std::shared_ptr<Socket>>;
 ```
+<!-- .element: class="fragment fade-in" -->
+
+**Rationale**: More intuitive alias creation.
+<!-- .element: class="fragment fade-in" -->
+
+A type alias is a name that refers to a previously defined type. It could be created with typedef.
+From C++11 type aliases should be created with `using` keyword.
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
-### Template alises
+### Template aliases
 
 ```cpp
 template <typename T>
@@ -28,8 +38,10 @@ StrKeyMap<int> my_map; // std::map<std::string, int>
 ```
 
 Type alias can be parametrized with templates. It was impossible with typedef.
+<!-- .element: class="fragment fade-in" -->
 
 Template aliases cannot be specialized.
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
