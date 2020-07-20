@@ -21,7 +21,7 @@
             var link = document.createElement('link');
             link.rel = 'stylesheet';
             link.type = 'text/css';
-            link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            link.href = window.location.search.match(/print-pdf/gi) ? '../css/print/pdf.css' : '../css/print/paper.css';
             document.getElementsByTagName('head')[0].appendChild(link);
         </script>
     </head>
@@ -30,14 +30,14 @@
         <div class="reveal">
             <div class="slides">
 
-                <section data-markdown="modern_cpp_cover.md" data-separator-vertical="^___"
+                <section data-markdown="00_cover.md" data-separator-vertical="^___"
                     data-separator-notes="^Note:">
                 </section>
-                <!--section data-markdown="modern_cpp_agenda.md" data-separator-vertical="^___"
+                <section data-markdown="00_agenda.md" data-separator-vertical="^___"
                     data-separator-notes="^Note:">
-                </section-->
+                </section>
 
-                <!-- section>
+                <section>
                     <h2>Let's get to know each other</h2>
                     <ol>
                         <li class="fragment fade-in">Your name and programming experience</li>
@@ -101,7 +101,7 @@
                 <section data-markdown="modern_cpp_constexpr.md" data-separator-vertical="^___"
                     data-separator-notes="^Note:">
                 </section>
-                <section data-markdown="modern_cpp_break.md" data-separator-vertical="^___"
+                <section data-markdown="00_break.md" data-separator-vertical="^___"
                     data-separator-notes="^Note:">
                 </section>
                 <section data-markdown="modern_cpp_noexcept.md" data-separator-vertical="^___"
@@ -113,13 +113,13 @@
                 <section data-markdown="modern_cpp_structure_bindings.md" data-separator-vertical="^___"
                     data-separator-notes="^Note:">
                 </section>
-                <section data-markdown="modern_cpp_break.md" data-separator-vertical="^___"
+                <section data-markdown="00_break.md" data-separator-vertical="^___"
                     data-separator-notes="^Note:">
                 </section>
                 <section data-markdown="modern_cpp_lambda.md" data-separator-vertical="^___"
                     data-separator-notes="^Note:">
                 </section>
-                <section data-markdown="modern_cpp_lbreak.md" data-separator-vertical="^___"
+                <section data-markdown="00_lunch_break.md" data-separator-vertical="^___"
                     data-separator-notes="^Note:">
                 </section>
                 <section data-markdown="modern_cpp_other.md" data-separator-vertical="^___"
