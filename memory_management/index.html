@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Memory management test</title>
+
+        <link rel="stylesheet" href="../css/reset.css">
+        <link rel="stylesheet" href="../css/reveal.css">
+        <link rel="stylesheet" href="../css/theme/coders.css" id="theme">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="../lib/css/monokai.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        </script>
+    </head>
+    <body>
+
+        <div class="reveal">
+            <div class="slides">
+                
+                <section data-background="#111111">
+                    <h2>Memory management problems</h2>
+                    <br/>
+                    <h3>CODERS SCHOOL</h3>
+                    <a href="https://coders.school">https://coders.school</a>
+
+                    <div class="multicolumn" style="height: 200px; position: relative;">
+                    <div class="col">
+                        <div style="position: absolute; bottom: 0">
+                            <img height=200 data-src="img/logo.png" alt="Coders School" class="plain" style="margin-bottom: 0">
+                        </div>
+                    </div>
+
+                    <div class="col" style="text-align: right; bottom: 0">
+                        <div style="position: absolute; bottom: 10px">
+                            Łukasz Ziobroń
+                            <a href="mailto:lukasz@coders.school">lukasz@coders.school</a>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+
+                <section data-markdown="memory_management_introduction.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:" data-background="#111111">
+                </section>
+
+                <section data-markdown="memory_management_agenda.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:" data-background="#111111">
+                </section>
+
+                <section data-markdown="memory_management_memory_map.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:" data-background="#111111">
+                </section>
+
+                <section data-markdown="memory_management_stack_vs_heap.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:" data-background="#111111">
+                </section>
+
+                <section data-markdown="memory_management_stack_allocation.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:" data-background="#111111">
+                </section>
+
+                <section data-markdown="memory_management_stack_overflow.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:" data-background="#111111">
+                </section>
+
+                <section data-markdown="memory_management_heap_allocation.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:" data-background="#111111">
+                </section>
+
+                <section data-markdown="memory_management_new_expression.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:" data-background="#111111">
+                </section>
+
+                <section data-markdown="memory_management_array_allocation.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:" data-background="#111111">
+                </section>
+
+                <section data-markdown="memory_management_allocation_problems.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:" data-background="#111111">
+                </section>
+
+                <section data-markdown="memory_management_simple_question.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:" data-background="#111111">
+                </section>
+
+                <section data-markdown="memory_management_raii.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:" data-background="#111111">
+                </section>
+
+                <section data-markdown="memory_management_memory_corruption.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:" data-background="#111111">
+                </section>
+
+                <section data-background="#111111">
+                    <h3>CODERS SCHOOL</h3>
+                    <a href="https://coders.school">https://coders.school</a>
+                    
+                    <br/><br/>
+                    
+                    <div class="multicolumn" style="height: 200px; position: relative;">
+                    <div class="col">
+                        <div style="position: absolute; bottom: 0">
+                            <img height=200 data-src="img/logo.png" alt="Coders School" class="plain" style="margin-bottom: 0">
+                        </div>
+                    </div>
+                    
+                    <div class="col" style="text-align: right; bottom: 0">
+                        <div style="position: absolute; bottom: 10px">
+                            Łukasz Ziobroń
+                            <a href="mailto:lukasz@coders.school">lukasz@coders.school</a>
+                        </div>
+                    </div>
+                    </div>                    
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../js/reveal.js"></script>
+
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                    width: 1200,
+                    height: 750,
+                    slideNumber: true,
+                    hash: true,
+                    pdfSeparateFragments: false,
+                    dependencies: [
+                            { src: '../plugin/externalcode/externalcode.js', condition: function() { return !!document.querySelector( '[data-code]' ); } },
+                            { src: '../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                            { src: '../plugin/markdown/marked.js' },
+                            { src: '../plugin/markdown/markdown.js' },
+                            { src: '../plugin/notes/notes.js', async: true }
+                    ]
+            });
+    </script>
+    </body>
+</html>
