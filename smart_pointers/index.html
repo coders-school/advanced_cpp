@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Smart Pointers</title>
+
+        <link rel="stylesheet" href="../css/reset.css">
+        <link rel="stylesheet" href="../css/reveal.css">
+        <link rel="stylesheet" href="../css/theme/coders.css" id="theme">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="../lib/css/monokai.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match(/print-pdf/gi) ? '../css/print/pdf.css' : '../css/print/paper.css';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        </script>
+    </head>
+    <body>
+
+        <div class="reveal">
+            <div class="slides">
+
+                <section data-background="#111111">
+                    <h1>Smart Pointers</h1>
+                    <br/>
+                    <h3>CODERS SCHOOL</h3>
+                    <a href="https://coders.school">https://coders.school</a>
+
+                    <div class="multicolumn">
+                    <div class="col">
+                            <img data-src="img/logo.png" alt="Coders School" class="plain" height="150px">
+                    </div>
+
+                    <div class="col"></div>
+
+                    <div class="col">
+                            Łukasz Ziobroń
+                            <a href="mailto:lukasz@coders.school">lukasz@coders.school</a>
+                    </div>
+                    </div>
+                </section>
+                <section data-markdown="smart_pointers_introduction.md"
+                         data-separator-vertical="^___"
+                         data-separator-notes="^Note:">
+                </section>
+                <section data-markdown data-background="#111111">
+                    <textarea data-template>
+
+                    # Agenda
+
+                    1. <!-- .element: class="fragment fade-in" --> Smart pointers
+                      * <!-- .element: class="fragment fade-in" --> <code>std::unique_ptr<></code>
+                      * <!-- .element: class="fragment fade-in" --> <code>std::shared_ptr<></code>
+                      * <!-- .element: class="fragment fade-in" --> <code>std::weak_ptr<></code>
+                    2. <!-- .element: class="fragment fade-in" --> Best practices
+                    3. <!-- .element: class="fragment fade-in" --> Implementation details
+                    4. <!-- .element: class="fragment fade-in" --> Efficiency
+
+                    </textarea>
+                </section>
+                <section data-markdown="smart_pointers_smart_ptrs.md"
+                         data-separator-vertical="^___"
+                         data-separator-notes="^Note:">
+                </section>
+                <section data-markdown="smart_pointers_unique_ptr.md"
+                         data-separator-vertical="^___"
+                         data-separator-notes="^Note:">
+                </section>
+                <section data-markdown="smart_pointers_shared_ptr.md"
+                         data-separator-vertical="^___"
+                         data-separator-notes="^Note:">
+                </section>
+                <section data-markdown="smart_pointers_weak_ptr.md"
+                         data-separator-vertical="^___"
+                         data-separator-notes="^Note:">
+                </section>
+                <section data-markdown="smart_pointers_auto_ptr.md"
+                         data-separator-vertical="^___"
+                         data-separator-notes="^Note:">
+                </section>
+                <section data-markdown="smart_pointers_summary.md"
+                         data-separator-vertical="^___"
+                         data-separator-notes="^Note:">
+                </section>
+                <section data-markdown="smart_pointers_best_practices.md"
+                         data-separator-vertical="^___"
+                         data-separator-notes="^Note:">
+                </section>
+                <section data-markdown="smart_pointers_implementation_details.md"
+                         data-separator-vertical="^___"
+                         data-separator-notes="^Note:">
+                </section>
+                <section data-markdown="smart_pointers_efficiency.md"
+                         data-separator-vertical="^___"
+                         data-separator-notes="^Note:">
+                </section>
+                <section data-background="#111111">
+                    <h3>CODERS SCHOOL</h3>
+                    <a href="https://coders.school">https://coders.school</a>
+
+                    <br/><br/>
+
+                    <div class="multicolumn">
+                    <div class="col">
+                        <div>
+                            <img data-src="img/logo.png" alt="Coders School" class="plain" height="150px">
+                        </div>
+                    </div>
+
+                    <div class="col"></div>
+
+                    <div class="col">
+                        Łukasz Ziobroń
+                        <a href="mailto:lukasz@coders.school">lukasz@coders.school</a>
+                    </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../js/reveal.js"></script>
+
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                    width: 1200,
+                    height: 750,
+                    slideNumber: true,
+                    hash: true,
+                    pdfSeparateFragments: false,
+                    dependencies: [
+                            { src: '../plugin/externalcode/externalcode.js', condition: function() { return !!document.querySelector( '[data-code]' ); } },
+                            { src: '../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                            { src: '../plugin/markdown/marked.js' },
+                            { src: '../plugin/markdown/markdown.js' },
+                            { src: '../plugin/notes/notes.js', async: true }
+                    ]
+            });
+    </script>
+    </body>
+</html>

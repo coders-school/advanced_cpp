@@ -4,6 +4,7 @@
 <div class="col" style="margin-top: 70px; font-size: 85%;">
 
 Heap allocation consists of a few steps:
+<!-- .element: class="fragment fade-in" -->
 
 * <!-- .element: class="fragment fade-in" --> pointer allocation on a stack
 * <!-- .element: class="fragment fade-in" --> <code>sizeof(T)</code> bytes allocation on a heap
@@ -24,9 +25,9 @@ void heap()
 void heap()
 {
     int *p;
-    p = new int;
+    p = (int*)malloc(sizeof(int));
     *p = 100;
-    delete p;
+    free(p);
 }
 ```
 
